@@ -233,32 +233,6 @@
                                    type="text" required="1"/>
                         </div>
 
-                        <div class="mb-3 col-12">
-                            <label class="mb-1 text-black fw-bold" for="web_sku">
-                                Web SKU
-                            </label>
-                            <input
-                                    id="web_sku"
-                                    class="form-control"
-                                    t-att-value="product.web_sku"
-                                    type="text"
-                                    readonly="1"
-                            />
-                        </div>
-
-                        <div class="mb-3 col-12">
-                            <label class="mb-1 text-black" for="web_barcode">
-                                <span class="fw-bold">Web Barcode</span>
-                            </label>
-
-                            <input
-                                    id="web_barcode"
-                                    class="form-control"
-                                    t-att-value="product.web_barcode"
-                                    type="text"
-                                    readonly="1"
-                            />
-                        </div>
 
                         <div class="mb-3 col-12">
                             <label class="mb-1 text-black" for="category">
