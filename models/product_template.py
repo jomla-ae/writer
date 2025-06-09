@@ -8,6 +8,12 @@ class ProductTemplate(models.Model):
 
     writer_id = fields.Many2one("res.users", string="Writer", tracking=True, domain=lambda self: [("groups_id", "in", self.env.ref("writer.group_writer").id)])
 
+    seo_title = fields.Char(string="SEO Title", tracking=True, translate=True)
+    seo_description = fields.Text(string="SEO Description", tracking=True, translate=True)
+    description_arabic = fields.Html("Description (Arabic)")
+
+
+
     def action_publish(self):
         super().action_publish()
 

@@ -135,7 +135,6 @@
                                    options="{'no_create':True,'color_field': 'color'}"/>
                             <field name="seo_title"/>
                             <field name="seo_description" optional="hide"/>
-                            <field name="old_image_url"/>
                         </group>
                         <group>
                             <field name="default_code" readonly="1"/>

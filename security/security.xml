@@ -30,7 +30,7 @@
 
         <record id="product_image_rule_writer" model="ir.rule">
             <field name="name">Writer: Product Image</field>
-            <field name="model_id" ref="customize_jomla.model_product_image"/>
+            <field name="model_id" ref="product_multi_image_type.model_product_image"/>
             <field name="groups" eval="[(4, ref('writer.group_writer'))]"/>
             <field name="domain_force">[('product_tmpl_id.writer_id', '=', user.id)]</field>
         </record>

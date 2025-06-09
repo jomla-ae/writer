@@ -11,7 +11,7 @@ access_writer_commission_line_group_writer,writer.commission.line.group.writer,m
 access_writer_writer_target_group_writer,writer.writer.target.group.writer,model_writer_target,writer.group_writer,1,0,0,0
 
 access_writer_product_template_group_writer,writer.product.template.group.writer,model_product_template,writer.group_writer,1,1,0,0
-access_writer_product_image_group_writer,writer.product.image.group.writer,customize_jomla.model_product_image,writer.group_writer,1,0,0,0
-access_writer_product_category_group_writer,writer.product.category.group.writer,customize_jomla.model_product_category,writer.group_writer,1,0,0,0
-access_writer_product_brand_group_writer,writer.product.brand.group.writer,customize_jomla.model_product_brand,writer.group_writer,1,0,0,0
-access_writer_product_tag_group_writer,writer.product.tag.group.writer,customize_jomla.model_product_tag,writer.group_writer,1,0,0,0
+access_writer_product_image_group_writer,writer.product.image.group.writer,product_multi_image_type.model_product_image,writer.group_writer,1,0,0,0
+access_writer_product_category_group_writer,writer.product.category.group.writer,product.model_product_category,writer.group_writer,1,0,0,0
+access_writer_product_brand_group_writer,writer.product.brand.group.writer,product_brand.model_product_brand,writer.group_writer,1,0,0,0
+access_writer_product_tag_group_writer,writer.product.tag.group.writer,product.model_product_tag,writer.group_writer,1,0,0,0

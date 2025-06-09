@@ -6,7 +6,7 @@
     "website": "https://github.com/jomla-ae",
     "category": "Inventory",
     "version": "0.1",
-    "depends": ["base", "product_status", "product_brand", "customize_jomla", "product_multi_image_type", "widget_ckeditor"],
+    "depends": ["base", "product_status", "product_brand", "product_multi_image_type", "widget_ckeditor", 'account', 'hr'],
     "data": [
         # cron
         "data/cron.xml",
