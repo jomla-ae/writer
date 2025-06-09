@@ -1,33 +1,17 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_writer_pricelist_group_stock_manager,writer.pricelist.group.stock.manager,model_writer_pricelist,stock.group_stock_manager,1,1,1,1
+access_writer_commission_line_group_stock_manager,writer.commission.line.group.stock.manager,model_writer_commission_line,stock.group_stock_manager,1,1,1,1
+access_writer_writer_target_group_stock_manager,writer.writer.target.group.stock.manager,model_writer_target,stock.group_stock_manager,1,1,1,1
 
-access_writer_pricelist_group_stock_manager,writer.pricelist.group_stock_manager,model_writer_pricelist,stock.group_stock_manager,1,1,1,1
-access_writer_pricelist_line_group_stock_manager,writer.pricelist.line.group_stock_manager,model_writer_pricelist_line,stock.group_stock_manager,1,1,1,1
-access_writer_commission_line_group_stock_manager,writer.commission.line.group_stock_manager,model_writer_commission_line,stock.group_stock_manager,1,1,1,1
-access_writer_target_group_stock_manager,writer.target.group_stock_manager,model_writer_target,stock.group_stock_manager,1,1,1,1
-access_writer_target_line_group_stock_manager,writer.target.line.group_stock_manager,model_writer_target_line,stock.group_stock_manager,1,1,1,1
+access_writer_assign_writer_wizard_group_stock_manager,writer.assign.writer.wizard.group.stock.manager,model_assign_writer,stock.group_stock_manager,1,1,1,1
+access_writer_ir_actions_act_window_group_stock_manager,writer.ir.actions.act.window.group.stock.manager,base.model_ir_actions_act_window,stock.group_stock_manager,1,1,1,1
+access_writer_ir_actions_act_window_view_group_stock_manager,writer.ir.actions.act.window.view.group.stock.manager,base.model_ir_actions_act_window_view,stock.group_stock_manager,1,1,1,1
 
-access_writer_commission_line_group_hr_user,writer.commission.line.group_hr_user,model_writer_commission_line,hr.group_hr_user,1,0,0,0
+access_writer_commission_line_group_writer,writer.commission.line.group.writer,model_writer_commission_line,writer.group_writer,1,0,0,0
+access_writer_writer_target_group_writer,writer.writer.target.group.writer,model_writer_target,writer.group_writer,1,0,0,0
 
-
-access_writer_commission_line_group_writer_user,writer.commission.line.group.writer.user,model_writer_commission_line,writer.group_writer_user,1,0,0,0
-access_writer_product_template_group_writer_user,writer.product.template.group.writer.user,product.model_product_template,writer.group_writer_user,1,1,0,0
-access_writer_product_product_group_writer_user,writer.product.product.group.writer.user,product.model_product_product,writer.group_writer_user,1,1,0,0
-access_writer_product_category_group_writer_user,writer.product.category.group.writer.user,product.model_product_category,writer.group_writer_user,1,1,0,0
-access_writer_product_brand_group_writer_user,writer.product.brand.group.writer.user,product_brand.model_product_brand,writer.group_writer_user,1,0,0,0
-access_writer_product_tag_group_writer_user,writer.product.tag.group.writer.user,product.model_product_tag,writer.group_writer_user,1,1,0,0
-access_writer_target_group_writer_user,writer.target.group.writer.user,model_writer_target,writer.group_writer_user,1,0,0,0
-access_writer_target_line_group_writer_user,writer.target.line.group.writer.user,model_writer_target_line,writer.group_writer_user,1,0,0,0
-
-access_writer_commission_line_group_portal,writer.commission.line.group.portal,model_writer_commission_line,base.group_portal,1,0,0,0
-access_writer_product_template_group_portal,writer.product.template.group.portal,product.model_product_template,base.group_portal,1,1,0,0
-access_writer_product_product_group_portal,writer.product.product.group.portal,product.model_product_product,base.group_portal,1,1,0,0
-access_writer_product_category_group_portal,writer.product.category.group.portal,product.model_product_category,base.group_portal,1,1,0,0
-access_writer_product_category_faq_group_portal,writer.product.category.faq.group.portal,customize_jomla.model_product_category_faq,base.group_portal,1,1,1,1
-access_writer_product_brand_group_portal,writer.product.brand.group.portal,product_brand.model_product_brand,base.group_portal,1,1,0,0
-access_writer_product_tag_group_portal,writer.product.tag.group.portal,product.model_product_tag,base.group_portal,1,1,0,0
-access_writer_product_tag_faq_group_portal,writer.product.tag.faq.group.portal,customize_jomla.model_product_tag_faq,base.group_portal,1,1,1,1
-access_writer_target_group_portal,writer.target.group.portal,model_writer_target,base.group_portal,1,0,0,0
-access_writer_target_line_group_portal,writer.target.line.group.portal,model_writer_target_line,base.group_portal,1,0,0,0
-
-
-access_assign_writer_wizard_group_user,assign.writer.wizard.group.user,model_assign_writer,base.group_user,1,1,1,1
+access_writer_product_template_group_writer,writer.product.template.group.writer,model_product_template,writer.group_writer,1,1,0,0
+access_writer_product_image_group_writer,writer.product.image.group.writer,customize_jomla.model_product_image,writer.group_writer,1,0,0,0
+access_writer_product_category_group_writer,writer.product.category.group.writer,customize_jomla.model_product_category,writer.group_writer,1,0,0,0
+access_writer_product_brand_group_writer,writer.product.brand.group.writer,customize_jomla.model_product_brand,writer.group_writer,1,0,0,0
+access_writer_product_tag_group_writer,writer.product.tag.group.writer,customize_jomla.model_product_tag,writer.group_writer,1,0,0,0

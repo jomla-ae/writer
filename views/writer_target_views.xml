@@ -1,59 +1,12 @@
 <odoo>
-    <record id="view_writer_target_line_filter" model="ir.ui.view">
-        <field name="name">view.writer.target.line.filter</field>
-        <field name="model">writer.target.line</field>
-        <field name="arch" type="xml">
-            <search string="Writer Target Line">
-                <field name="writer_target_id"/>
-                <field name="writer_id"/>
-                <field name="date_from"/>
-                <field name="date_to"/>
-                <field name="target"/>
-
-                <filter string="Date From" name="date_from" date="date_from"/>
-                <filter string="Date To" name="date_to" date="date_to"/>
-
-                <group expand="0" string="Group By">
-                    <filter name="group_by_type" string="Type" domain="[]" context="{'group_by':'type'}"/>
-                    <separator/>
-                    <filter name="group_by_writer_target_id" string="Target" domain="[]"
-                            context="{'group_by':'writer_target_id'}"/>
-                    <filter name="group_by_writer_id" string="Writer" domain="[]" context="{'group_by':'writer_id'}"/>
-                    <separator/>
-                    <filter name="group_by_date_from" string="Date From" domain="[]"
-                            context="{'group_by':'date_from'}"/>
-                    <filter name="group_by_date_to" string="Date To" domain="[]" context="{'group_by':'date_to'}"/>
-                </group>
-            </search>
-        </field>
-    </record>
-
-    <record id="view_writer_target_line_tree" model="ir.ui.view">
-        <field name="name">view.writer.target.line.tree</field>
-        <field name="model">writer.target.line</field>
-        <field name="arch" type="xml">
-            <tree string="Writer Target Line" create="0" delete="0" edit="0">
-                <field name="writer_target_id" string="Target Name"/>
-                <field name="writer_id" optional="show"/>
-                <field name="date_from" optional="show"/>
-                <field name="date_to" optional="show"/>
-                <field name="type" optional="show"/>
-                <field name="target" sum="Total Target" optional="show"/>
-                <field name="target_achieved" sum="Total Target Achieved" optional="show"/>
-            </tree>
-        </field>
-    </record>
-
-    <record id="view_writer_target_filter" model="ir.ui.view">
-        <field name="name">view.writer.target.filter</field>
+    <record id="writer_target_view_filter" model="ir.ui.view">
+        <field name="name">writer.target.view.filter</field>
         <field name="model">writer.target</field>
         <field name="arch" type="xml">
             <search string="Writer Target">
-                <field name="name"/>
                 <field name="writer_id"/>
                 <field name="date_from"/>
                 <field name="date_to"/>
-                <field name="company_id" groups="base.group_multi_company"/>
 
                 <filter string="Date From" name="date_from" date="date_from"/>
                 <filter string="Date To" name="date_to" date="date_to"/>
@@ -65,66 +18,42 @@
                             context="{'group_by':'date_from'}"/>
                     <filter name="group_by_date_to" string="Date To" domain="[]" context="{'group_by':'date_to'}"/>
                     <separator/>
-                    <filter name="group_by_company_id" string="Company" domain="[]" context="{'group_by':'company_id'}"
-                            groups="base.group_multi_company"/>
                 </group>
             </search>
         </field>
     </record>
 
-    <record id="view_writer_target_tree" model="ir.ui.view">
-        <field name="name">view.writer.target.tree</field>
+    <record id="writer_target_view_tree" model="ir.ui.view">
+        <field name="name">writer.target.view.tree</field>
         <field name="model">writer.target</field>
         <field name="arch" type="xml">
             <tree string="Writer Target">
-                <field name="name"/>
                 <field name="writer_id" optional="show"/>
                 <field name="date_from" optional="show"/>
                 <field name="date_to" optional="show"/>
-                <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                <field name="target"/>
+                <field name="target_achieved"/>
             </tree>
         </field>
     </record>
 
-    <record id="view_writer_target_form" model="ir.ui.view">
-        <field name="name">view.writer.target.form</field>
+    <record id="writer_target_view_form" model="ir.ui.view">
+        <field name="name">writer.target.view.form</field>
         <field name="model">writer.target</field>
         <field name="arch" type="xml">
             <form string="Writer Target">
                 <sheet>
-                    <div class="oe_title">
-                        <label for="name" string="Target Name"/>
-                        <h1>
-                            <div class="d-flex">
-                                <field class="text-break" name="name"/>
-                            </div>
-                        </h1>
-                    </div>
-
                     <group>
                         <group>
-                            <field name="writer_id" options="{'no_open':True,'no_create':True}"/>
-                            <field name="company_id" invisible="1"/>
+                            <field name="writer_id"/>
+                            <field name="target"/>
+                            <field name="target_achieved"/>
                         </group>
                         <group>
                             <field name="date_from"/>
                             <field name="date_to"/>
-                            <field name="company_id" groups="base.group_multi_company"
-                                   options="{'no_open':True,'no_create':True}"/>
                         </group>
                     </group>
-
-                    <notebook>
-                        <page name="information" string="Information">
-                            <field name="line_ids">
-                                <tree name="lines" string="Lines" editable="bottom">
-                                    <field name="type"/>
-                                    <field name="target" sum="Total Target"/>
-                                    <field name="target_achieved" sum="Total Target Achieved" optional="show"/>
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
                 </sheet>
 
                 <div class="oe_chatter">
@@ -136,15 +65,9 @@
         </field>
     </record>
 
-    <record id="action_writer_targets" model="ir.actions.act_window">
+    <record id="writer_target_action" model="ir.actions.act_window">
         <field name="name">Writer Targets</field>
         <field name="res_model">writer.target</field>
         <field name="view_mode">tree,form</field>
-    </record>
-
-    <record id="action_writer_target_lines" model="ir.actions.act_window">
-        <field name="name">Writer Target Lines</field>
-        <field name="res_model">writer.target.line</field>
-        <field name="view_mode">tree</field>
     </record>
 </odoo>

@@ -1,36 +1,40 @@
 <odoo>
-    <menuitem id="menu_writer_main" name="Writers" web_icon="writer,static/description/icon.png"
-              groups="hr.group_hr_user,writer.group_writer_user,stock.group_stock_manager"/>
+    <menuitem id="writer_menu_main"
+              name="Writers"
+              web_icon="writer,static/description/icon.png"/>
 
-    <menuitem id="menu_hr_employee_writers" name="Writers" parent="writer.menu_writer_main"
-              action="action_hr_employee_writers" sequence="1" groups="hr.group_hr_user"/>
+    <menuitem id="res_users_menu_writer"
+              name="Writers"
+              parent="writer_menu_main"
+              action="writer_res_users_action"/>
 
-    <menuitem id="menu_writer_product_templates" name="Products" parent="writer.menu_writer_main"
-              action="action_writer_product_templates" sequence="2"
-              groups="writer.group_writer_user,stock.group_stock_manager"/>
-    <menuitem id="menu_writer_product_categories" name="Product Categories" parent="writer.menu_writer_main"
-              action="action_writer_product_categories" sequence="3"
-              groups="writer.group_writer_user,stock.group_stock_manager"/>
+    <menuitem id="product_template_menu_writer"
+              name="Products"
+              parent="writer_menu_main"
+              action="writer_product_template_action"/>
 
-    <menuitem id="menu_writer_targets_main" name="Writer Targets" parent="writer.menu_writer_main" sequence="4"/>
-    <menuitem id="menu_writer_targets" name="Targets" parent="writer.menu_writer_targets_main"
-              action="action_writer_targets" sequence="1"/>
-    <menuitem id="menu_writer_target_lines" name="Target Lines" parent="writer.menu_writer_targets_main"
-              action="action_writer_target_lines" sequence="2"/>
+    <menuitem id="writer_target_menu"
+              name="Targets"
+              parent="writer_menu_main"
+              action="writer_target_action"/>
 
-    <menuitem id="menu_writer_commission_lines" name="Commission Lines" parent="writer.menu_writer_main"
-              action="action_writer_commission_lines" sequence="5"/>
+    <menuitem id="writer_commission_line_menu"
+              name="Commission Lines"
+              parent="writer_menu_main"
+              action="writer_commission_line_action"/>
 
     <!-- Configuration -->
-    <menuitem id="menu_writer_configuration" name="Configuration" parent="menu_writer_main"
-              sequence="10" groups="base.group_system,stock.group_stock_manager"/>
+    <menuitem id="writer_menu_config"
+              name="Configuration"
+              parent="writer_menu_main"/>
 
-    <menuitem id="menu_writer_setting" name="Settings" parent="menu_writer_configuration" action="action_writer_config"
-              sequence="1"/>
-    <menuitem id="menu_writer_priclists" name="Writer Pricelists" parent="writer.menu_writer_configuration"
-              action="action_writer_priclists" sequence="2" groups="stock.group_stock_manager"/>
-    <menuitem id="menu_writer_product_brands" name="Product Brands" parent="writer.menu_writer_configuration"
-              action="action_writer_product_brands" sequence="3"/>
-    <menuitem id="menu_writer_product_tags" name="Product Tags" parent="writer.menu_writer_configuration"
-              action="action_writer_product_tags" sequence="4"/>
+    <menuitem id="res_config_settings_menu_writer"
+              name="Settings"
+              parent="writer_menu_config"
+              action="writer_res_config_settings_action"/>
+
+    <menuitem id="writer_priclist_menu"
+              name="Pricelists"
+              parent="writer_menu_config"
+              action="writer_priclist_action"/>
 </odoo>

@@ -1,116 +1,27 @@
 <odoo>
-    <record id="view_writer_pricelist_line_form" model="ir.ui.view">
-        <field name="name">view.writer.pricelist.line.form</field>
-        <field name="model">writer.pricelist.line</field>
-        <field name="arch" type="xml">
-            <form string="Writer Pricelist Line">
-                <sheet>
-                    <div class="oe_title">
-                        <label for="name" string="Price Rule Name"/>
-                        <h1>
-                            <div class="d-flex">
-                                <field class="text-break" name="name"/>
-                            </div>
-                        </h1>
-                    </div>
-
-                    <group>
-                        <group>
-                            <field name="type" widget="radio"/>
-                            <field name="category_applied_on" widget="radio"
-                                   attrs="{'invisible':[('type','=','by_product')]}"/>
-                            <field name="product_applied_on" widget="radio"
-                                   attrs="{'invisible':[('type','=','by_category')]}"/>
-                            <field name="product_category_ids" widget="many2many_tags"
-                                   options="{'no_open':True,'no_create':True}"
-                                   attrs="{'invisible':[('category_applied_on','!=','special'),('product_applied_on','!=','category')],'required':['|',('category_applied_on','=','special'),('product_applied_on','=','category')]}"/>
-                            <field name="product_template_ids" widget="many2many_tags"
-                                   options="{'no_open':True,'no_create':True}"
-                                   attrs="{'invisible':[('product_applied_on','!=','special')],'required':[('product_applied_on','=','special')]}"/>
-                        </group>
-                        <group>
-                            <field name="price"/>
-                            <field name="currency_id" invisible="1"/>
-                            <field name="company_id" invisible="1"/>
-                        </group>
-                    </group>
-                </sheet>
-            </form>
-        </field>
-    </record>
-
-    <record id="view_writer_pricelist_filter" model="ir.ui.view">
-        <field name="name">view.writer.pricelist.filter</field>
-        <field name="model">writer.pricelist</field>
-        <field name="arch" type="xml">
-            <search string="Writer Pricelist">
-                <field name="name"/>
-                <field name="writer_id"/>
-                <field name="company_id" groups="base.group_multi_company"/>
-
-                <group expand="0" string="Group By">
-                    <filter name="group_by_writer_id" string="Writer" domain="[]" context="{'group_by':'writer_id'}"/>
-                    <separator/>
-                    <filter name="group_by_company_id" string="Company" domain="[]" context="{'group_by':'company_id'}"
-                            groups="base.group_multi_company"/>
-                </group>
-            </search>
-        </field>
-    </record>
-
-    <record id="view_writer_pricelist_tree" model="ir.ui.view">
-        <field name="name">view.writer.pricelist.tree</field>
+    <record id="writer_pricelist_view_tree" model="ir.ui.view">
+        <field name="name">writer.pricelist.view.tree</field>
         <field name="model">writer.pricelist</field>
         <field name="arch" type="xml">
             <tree string="Writer Pricelist">
-                <field name="name"/>
-                <field name="writer_id" optional="show"/>
-                <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                <field name="display_name"/>
+                <field name="writer_ids" optional="show"/>
+                <field name="price"/>
             </tree>
         </field>
     </record>
 
-    <record id="view_writer_pricelist_form" model="ir.ui.view">
-        <field name="name">view.writer.pricelist.form</field>
+    <record id="writer_pricelist_view_form" model="ir.ui.view">
+        <field name="name">writer.pricelist.view.form</field>
         <field name="model">writer.pricelist</field>
         <field name="arch" type="xml">
             <form string="Writer Pricelist">
                 <sheet>
-                    <div class="oe_title">
-                        <label for="name" string="Pricelist Name"/>
-                        <h1>
-                            <div class="d-flex">
-                                <field class="text-break" name="name"/>
-                            </div>
-                        </h1>
-                    </div>
-
                     <group>
-                        <group>
-                            <field name="writer_id" options="{'no_open':True,'no_create':True}"/>
-                            <field name="company_id" invisible="1"/>
-                        </group>
-                        <group>
-                            <field name="currency_id" groups="base.group_multi_currency"
-                                   options="{'no_open':True,'no_create':True}"/>
-                            <field name="company_id" groups="base.group_multi_company"
-                                   options="{'no_open':True,'no_create':True}"/>
-                        </group>
+                        <field name="writer_ids" widget="many2many_checkboxes"/>
+                        <field name="currency_id" groups="base.group_multi_currency"/>
+                        <field name="price"/>
                     </group>
-
-                    <notebook>
-                        <page name="lines" string="Price Rules">
-                            <field name="line_ids">
-                                <tree name="lines" string="Lines">
-                                    <field name="name"/>
-                                    <field name="type"/>
-                                    <field name="price" sum="Total Price"/>
-                                    <field name="currency_id" invisible="1"/>
-                                    <field name="company_id" invisible="1"/>
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids"/>
@@ -121,7 +32,7 @@
         </field>
     </record>
 
-    <record id="action_writer_priclists" model="ir.actions.act_window">
+    <record id="writer_priclist_action" model="ir.actions.act_window">
         <field name="name">Writer Pricelists</field>
         <field name="res_model">writer.pricelist</field>
         <field name="view_mode">tree,form</field>

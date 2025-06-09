@@ -1,6 +1,6 @@
 <odoo>
-    <record id="view_writer_product_template_only_filter" model="ir.ui.view">
-        <field name="name">view.writer.product.template.only.filter</field>
+    <record id="product_template_search_view" model="ir.ui.view">
+        <field name="name">product.template.search.view.inherit.writer</field>
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_search_view"/>
         <field name="arch" type="xml">
@@ -15,8 +15,8 @@
         </field>
     </record>
 
-    <record id="view_writer_product_template_only_tree" model="ir.ui.view">
-        <field name="name">view.writer.product.template.only.tree</field>
+    <record id="product_template_tree_view" model="ir.ui.view">
+        <field name="name">product.template.tree.view.inherit.writer</field>
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_tree_view"/>
         <field name="arch" type="xml">
@@ -26,19 +26,19 @@
         </field>
     </record>
 
-    <record id="view_writer_product_template_form" model="ir.ui.view">
-        <field name="name">view.product.writer.product.template.form</field>
+    <record id="product_template_form_view" model="ir.ui.view">
+        <field name="name">product.template.form.view.inherit.writer</field>
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='categ_id']" position="after">
-                <field name="writer_id" options="{'no_open':True,'no_create':True}"/>
+                <field name="writer_id"/>
             </xpath>
         </field>
     </record>
 
-    <record id="view_writer_product_template_edit_filter" model="ir.ui.view">
-        <field name="name">view.writer.product.template.edit.filter</field>
+    <record id="writer_product_template_view_search" model="ir.ui.view">
+        <field name="name">writer.product.template.view.search</field>
         <field name="model">product.template</field>
         <field name="arch" type="xml">
             <search string="Writer Product">
@@ -47,6 +47,11 @@
                 <field name="categ_id"/>
                 <field name="brand_id"/>
                 <field name="product_tag_ids"/>
+                <field name="writer_id"/>
+                <field name="state"/>
+                <field name="sale_ok"/>
+
+                <filter string="Can be Sold" name="filter_to_sell" domain="[('sale_ok','=',True)]"/>
 
                 <group expand="0" string="Group By">
                     <filter name="group_by_categ_id" string="Product Category" domain="[]"
@@ -55,17 +60,21 @@
                     <filter name="group_by_product_tag_ids" string="Product Tags" domain="[]"
                             context="{'group_by':'product_tag_ids'}"/>
                     <separator/>
-                    <filter name="group_by_state" string="Status" domain="[]" context="{'group_by':'state'}"/>
+
+                    <filter name="group_by_writer" string="Writer" domain="[]" context="{'group_by':'writer_id'}"/>
+
+                    <filter name="group_by_state" string="State" domain="[]" context="{'group_by':'state'}"/>
+
                 </group>
             </search>
         </field>
     </record>
 
-    <record id="view_writer_product_template_edit_tree" model="ir.ui.view">
-        <field name="name">view.writer.product.template.edit.tree</field>
+    <record id="writer_product_template_view_tree" model="ir.ui.view">
+        <field name="name">writer.product.template.view.tree</field>
         <field name="model">product.template</field>
         <field name="arch" type="xml">
-            <tree string="Writer Product" create="0" delete="0">
+            <tree string="Writer Product" create="0" delete="0" multi_edit="1">
                 <field name="name" string="Product Name"/>
                 <field name="default_code" optional="show"/>
                 <field name="categ_id" optional="show"/>
@@ -79,8 +88,8 @@
         </field>
     </record>
 
-    <record id="view_writer_product_template_edit_form" model="ir.ui.view">
-        <field name="name">view.writer.product.template.edit.form</field>
+    <record id="writer_product_template_view_form" model="ir.ui.view">
+        <field name="name">writer.product.template.view.form</field>
         <field name="model">product.template</field>
         <field name="arch" type="xml">
             <form string="Writer Product" create="0" delete="0">
@@ -126,10 +135,11 @@
                                    options="{'no_create':True,'color_field': 'color'}"/>
                             <field name="seo_title"/>
                             <field name="seo_description" optional="hide"/>
+                            <field name="old_image_url"/>
                         </group>
                         <group>
-                            <field name="default_code"  readonly="1"/>
-                            <field name="writer_id" options="{'no_open':True,'no_create':True}" readonly="1"/>
+                            <field name="default_code" readonly="1"/>
+                            <field name="writer_id"/>
                             <field name="active" invisible="1"/>
                             <field name="sale_ok" invisible="1"/>
                         </group>
@@ -151,24 +161,25 @@
         </field>
     </record>
 
-    <record id="action_writer_product_templates" model="ir.actions.act_window">
+    <record id="writer_product_template_action" model="ir.actions.act_window">
         <field name="name">Products</field>
         <field name="res_model">product.template</field>
         <field name="view_mode">tree,form</field>
-        <field name="search_view_id" ref="writer.view_writer_product_template_edit_filter"/>
+        <field name="context">{'search_default_filter_to_sell': 1}</field>
+        <field name="search_view_id" ref="writer.writer_product_template_view_search"/>
     </record>
 
-    <record id="action_writer_product_templates_tree" model="ir.actions.act_window.view">
+    <record id="writer_product_template_view_tree_action" model="ir.actions.act_window.view">
         <field eval="0" name="sequence"/>
         <field name="view_mode">tree</field>
-        <field name="view_id" ref="writer.view_writer_product_template_edit_tree"/>
-        <field name="act_window_id" ref="writer.action_writer_product_templates"/>
+        <field name="view_id" ref="writer.writer_product_template_view_tree"/>
+        <field name="act_window_id" ref="writer.writer_product_template_action"/>
     </record>
 
-    <record id="action_writer_product_templates_form" model="ir.actions.act_window.view">
+    <record id="writer_product_template_view_form_action" model="ir.actions.act_window.view">
         <field eval="1" name="sequence"/>
         <field name="view_mode">form</field>
-        <field name="view_id" ref="writer.view_writer_product_template_edit_form"/>
-        <field name="act_window_id" ref="writer.action_writer_product_templates"/>
+        <field name="view_id" ref="writer.writer_product_template_view_form"/>
+        <field name="act_window_id" ref="writer.writer_product_template_action"/>
     </record>
 </odoo>

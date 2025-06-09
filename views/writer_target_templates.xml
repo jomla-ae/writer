@@ -1,0 +1,68 @@
+<odoo>
+
+    <template id="portal_my_writer_targets" name="My Writer Targets">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Targets</t>
+            </t>
+
+            <ol class="o_portal_submenu breadcrumb mb-0 py-2 flex-grow-1">
+                <li>
+                    <input type="hidden" id="keep_query" t-att-value="keep_query()"/>
+                    <button type="button" class="btn btn-primary o_default_snippet_text" title="Export"
+                            onclick="onclick_writer_targets_export()">Export
+                    </button>
+                </li>
+            </ol>
+
+            <t t-if="not writer_targets">
+                <div class="alert alert-warning mt8" role="alert">
+                    There are no targets.
+                </div>
+            </t>
+            <t t-else="">
+                <t t-call="portal.portal_table">
+                    <thead>
+                        <tr>
+                            <th/>
+                            <th>Target</th>
+                            <th>Target Achieved</th>
+                            <th>Date From</th>
+                            <th>Date To</th>
+                        </tr>
+                    </thead>
+
+                    <tbody t-if="writer_targets">
+                        <t t-foreach="writer_targets" t-as="target">
+                            <tr class="tr_writer_target">
+                                <td>
+                                    <input class="form-check-input ms-2" type="checkbox"
+                                           t-att-id="target.id"
+                                           onchange="select_writer_target(this)"/>
+                                </td>
+
+                                <td class="text-start">
+                                    <span t-field="target.target"/>
+                                </td>
+
+                                <td>
+                                    <span t-field="target.target_achieved"/>
+                                </td>
+
+                                <td>
+                                    <span t-field="target.date_from"/>
+                                </td>
+
+                                <td>
+                                    <span t-field="target.date_to"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

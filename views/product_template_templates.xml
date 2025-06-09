@@ -1,0 +1,396 @@
+<odoo>
+    <template id="portal_my_writer_products" name="My Writer Product">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Products</t>
+            </t>
+
+            <div class="d-flex align-items-center mb-2">
+                <div class="dropdown ms-auto">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="columnToggleDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Columns
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="columnToggleDropdown" id="columnToggleMenu">
+                        <li><label class="dropdown-item"><input type="checkbox" class="o_column_toggle" data-col="2" checked="checked"/> Product Name</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" class="o_column_toggle" data-col="3" checked="checked"/> Internal Reference</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" class="o_column_toggle" data-col="4" checked="checked"/> Product Category</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" class="o_column_toggle" data-col="5" checked="checked"/> Brand</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" class="o_column_toggle" data-col="6" checked="checked"/> Product Tags</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" class="o_column_toggle" data-col="7" checked="checked"/> Status</label></li>
+                    </ul>
+                </div>
+            </div>
+
+            <t t-if="not grouped_products">
+                <div class="alert alert-warning mt8" role="alert">
+                    There are no products.
+                </div>
+            </t>
+            <t t-else="">
+                <t t-call="portal.portal_table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Product Name</th>
+                            <th>Internal Reference</th>
+                            <th>Product Category</th>
+                            <th>Brand</th>
+                            <th>Product Tags</th>
+                            <th class="text-end">Status</th>
+                            <th/>
+                            <th/>
+                        </tr>
+                    </thead>
+
+                    <t t-foreach="grouped_products" t-as="products">
+                        <tbody t-if="products">
+                            <tr t-if="not groupby == 'none'" class="table-light">
+                                <th t-if="groupby == 'category'" colspan="9">
+                                    <span class="text-truncate">
+                                        <span t-field="products[0].categ_id"/> (<span t-esc="len(products)"></span>)
+                                    </span>
+                                </th>
+                                <th t-if="groupby == 'brand'" colspan="9">
+                                    <span class="text-truncate">
+                                        <span t-esc="products[0].brand_id or 'None'"/> (<span t-esc="len(products)"></span>)
+                                    </span>
+                                </th>
+
+                                <th t-if="groupby == 'state'" colspan="9">
+                                    <span class="text-truncate">
+                                        <span t-field="products[0].state"></span> (<span t-esc="len(products)"></span>)
+                                    </span>
+                                </th>
+                            </tr>
+                        </tbody>
+
+                        <tbody t-if="products">
+                            <t t-foreach="products" t-as="product">
+                                <tr>
+                                    <td>
+                                        <img
+                                                t-if="product.image_1920"
+                                                t-att-src="image_data_uri(product.image_1920)"
+                                                style="max-height:60pt;max-width:90%"
+                                                alt="Product Image"
+                                        />
+                                        <img
+                                                t-elif="product.old_image_url"
+                                                t-att-src="product.old_image_url"
+                                                style="max-height:60pt;max-width:90%"
+                                                alt="Product Image"
+                                        />
+                                    </td>
+
+                                    <td>
+                                        <span t-field="product.name"/>
+                                    </td>
+
+                                    <td>
+                                        <span t-field="product.default_code"/>
+                                    </td>
+
+                                    <td>
+                                        <span t-field="product.categ_id"/>
+                                    </td>
+
+                                    <td>
+                                        <span t-field="product.brand_id"/>
+
+                                    </td>
+
+                                    <td>
+                                        <span t-field="product.product_tag_ids"/>
+                                    </td>
+
+                                    <td class="text-end">
+                                        <span class="badge text-bg-light" t-field="product.state"/>
+                                    </td>
+
+                                    <td>
+                                        <t t-if="product.state == 'draft' or product.state == 'to_reviewed'">
+                                            <a t-attf-href="/my/writer_products/edit/#{product.id}" title="Edit">
+                                                <button type="button" class="btn btn-secondary o_default_snippet_text">
+                                                    Edit
+                                                </button>
+                                            </a>
+                                        </t>
+                                    </td>
+
+                                    <td>
+                                        <t t-if="product.state == 'draft' or product.state == 'to_reviewed'">
+                                            <a t-attf-href="/my/writer_products/submit/#{product.id}" title="Submit">
+                                                <button type="button" class="btn btn-secondary o_default_snippet_text">
+                                                    Submit
+                                                </button>
+                                            </a>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="portal_my_writer_product_edit" name="Writer Product Edit">
+        <t t-call="portal.portal_layout">
+            <form method="post" role="form" class="o_writer_product_editor_form js_website_submit_form"
+                  enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <input type="hidden" name="submit_option"/>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 col-12 position-relative">
+                            <t t-set="product_images" t-value="product._get_images()"/>
+                            <div id="o-carousel-product"
+                                 class="carousel slide position-sticky mb-3 overflow-hidden"
+                                 data-bs-ride="carousel" data-bs-interval="0"
+                                 data-name="Product Carousel">
+                                <div class="o_carousel_product_outer carousel-outer position-relative flex-grow-1">
+                                    <div class="carousel-inner">
+                                        <t t-set="image_classes"
+                                           t-value="'d-flex align-items-center justify-content-center'"/>
+                                        <t t-foreach="product_images" t-as="product_image">
+                                            <div t-attf-class="carousel-item #{'active' if product_image_first else ''}"
+                                                 t-att-id="product_image.id"
+                                                 t-att-model="product_image._name"
+                                                 t-att-image_type="product_image._name == 'product.image' and product_image.type or ''">
+
+                                                <div t-if="product_image._name == 'product.image' and product_image.embed_code"
+                                                     style="height: 400px"
+                                                     t-att-class="image_classes + ' ratio ratio-16x9'">
+                                                    <t t-out="product_image.embed_code"/>
+                                                </div>
+                                                <div t-else=""
+                                                     t-field="product_image.image_1920"
+                                                     t-att-class="image_classes + ' oe_unmovable'"
+                                                     style="height: 400px"
+                                                     t-options='{
+                                                                         "widget": "image",
+                                                                         "preview_image": "image_1024",
+                                                                         "class": "oe_unmovable product_detail_img mh-100",
+                                                                         "alt-field": "name",
+                                                                         "zoom": product_image.can_image_1024_be_zoomed and "image_1920"
+                                                                         }'
+                                                />
+                                            </div>
+                                        </t>
+
+                                        <div style="min-height: 400px;display:none"
+                                             id="add_product_image_0" model="no_model">
+                                            <div t-att-class="image_classes + ' ratio-16x9'">
+                                                <img src=""
+                                                     class="img img-fluid oe_unmovable product_detail_img mh-100"
+                                                     alt="Add" data-zoom="1"
+                                                     style="max-height:1pt;max-width:90%"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <t t-set="product_images_count" t-value="len(product_images)"/>
+                                    <a id="carousel_prev" class="carousel-control-prev"
+                                       href="#o-carousel-product"
+                                       role="button" data-bs-slide="prev"
+                                       t-attf-style="color: black;#{ (product_images_count &lt;= 1) and 'display:none;' or ''}">
+                                        <span class="fa fa-chevron-left fa-2x oe_unmovable"
+                                              role="img"
+                                              aria-label="Previous" title="Previous"/>
+                                    </a>
+                                    <a id="carousel_next" class="carousel-control-next"
+                                       href="#o-carousel-product"
+                                       role="button" data-bs-slide="next"
+                                       t-attf-style="color: black;#{ (product_images_count &lt;= 1) and 'display:none;' or ''}">
+                                        <span class="fa fa-chevron-right fa-2x oe_unmovable"
+                                              role="img"
+                                              aria-label="Next" title="Next"/>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-12">
+                            <label class="mb-1 text-black" for="name">
+                                <span class="fw-bold">Product Name</span>
+                            </label>
+
+                            <input name="name" id="name" class="form-control"
+                                   t-att-value="product.with_context(lang=lang_code_en).name"
+                                   type="text" required="1"/>
+                        </div>
+
+                        <div class="mb-3 col-12">
+                            <label class="mb-1" for="name_arabic">
+                                <span class="fw-bold">Product Name (Arabic)</span>
+                            </label>
+
+                            <input name="name_arabic" id="name_arabic" class="form-control"
+                                   t-att-value="product.with_context(lang=lang_code_ar or lang_code_en).name"
+                                   type="text" required="1"/>
+                        </div>
+
+                        <div class="mb-3 col-12">
+                            <label class="mb-1 text-black fw-bold" for="web_sku">
+                                Web SKU
+                            </label>
+                            <input
+                                    id="web_sku"
+                                    class="form-control"
+                                    t-att-value="product.web_sku"
+                                    type="text"
+                                    readonly="1"
+                            />
+                        </div>
+
+                        <div class="mb-3 col-12">
+                            <label class="mb-1 text-black" for="web_barcode">
+                                <span class="fw-bold">Web Barcode</span>
+                            </label>
+
+                            <input
+                                    id="web_barcode"
+                                    class="form-control"
+                                    t-att-value="product.web_barcode"
+                                    type="text"
+                                    readonly="1"
+                            />
+                        </div>
+
+                        <div class="mb-3 col-12">
+                            <label class="mb-1 text-black" for="category">
+                                <span class="fw-bold">Category</span>
+                            </label>
+
+                            <input id="category"
+                                   class="form-control"
+                                   t-att-value="product.categ_id.name"
+                                   type="text"
+                                   readonly="1"/>
+                        </div>
+
+
+                        <div class="mb-3 col-12">
+                            <label class="mb-1 text-black" for="brand_id">
+                                <span class="fw-bold">Brand</span>
+                            </label>
+
+                            <input
+                                    id="brand_id"
+                                    class="form-control"
+                                    t-att-value="product.brand_id.name"
+                                    type="text"
+                                    readonly="1"
+                            />
+                        </div>
+
+                        <div class="mb-3 col-12">
+                            <label class="mb-1 text-black" for="product_tag_ids">
+                                <span class="fw-bold">Product Tags</span>
+                            </label>
+
+                            <input
+                                    id="product_tag_ids"
+                                    class="form-control"
+                                    t-att-value="', '.join([tag.name for tag in product.product_tag_ids])"
+                                    type="text"
+                                    readonly="1"
+                            />
+                        </div>
+
+                        <div class="mb-3 col-12">
+                            <label class="mb-1 text-black" for="description">
+                                <span class="fw-bold">Sales Description</span>
+                            </label>
+
+                            <textarea name="description" id="description" style="min-height: 120px"
+                                      class="form-control o_ckeditor_loader" data-lang="en"
+                            ><t t-esc="product.with_context(lang=lang_code_en).description" /></textarea>
+                        </div>
+
+                        <div class="mb-3 col-12">
+                            <label class="mb-1" for="description_arabic">
+                                <span class="fw-bold">Sales Description (Arabic)</span>
+                            </label>
+
+                            <textarea name="description_arabic" id="description_arabic"
+                                      style="min-height: 120px"
+                                      class="form-control o_ckeditor_loader" data-lang="ar"
+                            ><t t-esc="product.description_arabic" /></textarea>
+                        </div>
+
+                        <div class="mb-3 col-12">
+                            <label class="mb-1 text-black" for="seo_title">
+                                <span class="fw-bold">SEO Title</span>
+                            </label>
+
+                            <input name="seo_title" id="seo_title" class="form-control"
+                                   t-att-value="product.with_context(lang=lang_code_en).seo_title"
+                                   type="text"/>
+                        </div>
+
+                        <div class="mb-3 col-12">
+                            <label class="mb-1 text-black" for="seo_title_arabic">
+                                <span class="fw-bold">SEO Title (Arabic)</span>
+                            </label>
+
+                            <input name="seo_title_arabic" id="seo_title_arabic"
+                                   class="form-control"
+                                   t-att-value="product.with_context(lang=lang_code_ar or lang_code_en).seo_title"
+                                   type="text"/>
+                        </div>
+
+                        <div class="mb-3 col-12">
+                            <label class="mb-1 text-black" for="seo_description">
+                                <span class="fw-bold">SEO Description</span>
+                            </label>
+
+                            <textarea
+                                name="seo_description"
+                                id="seo_description"
+                                style="min-height: 120px"
+                                class="form-control"
+                            ><t t-esc="product.with_context(lang=lang_code_en).seo_description" /></textarea>
+                        </div>
+
+                        <div class="mb-3 col-12">
+                            <label class="mb-1 text-black" for="seo_description_arabic">
+                                <span class="fw-bold">SEO Description (Arabic)</span>
+                            </label>
+
+                            <textarea
+                                name="seo_description_arabic"
+                                id="seo_description_arabic"
+                                style="min-height: 120px"
+                                class="form-control"
+                            ><t t-esc="product.with_context(lang=lang_code_ar or lang_code_en).seo_description" /></textarea>
+                        </div>
+
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button name="o_writer_submit_save_button" type="submit"
+                                    class="btn btn-primary">Save and Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="mt32">
+                <h4>
+                    <strong>Message and communication history</strong>
+                </h4>
+                <t t-if="product">
+                    <t t-call="portal.message_thread">
+                        <t t-set="object" t-value="product"/>
+                        <!-- <t t-set="token" t-value="product.access_token"/> -->
+                        <t t-set="pid" t-value="pid"/>
+                        <t t-set="hash" t-value="hash"/>
+                    </t>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

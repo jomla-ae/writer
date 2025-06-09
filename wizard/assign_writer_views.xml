@@ -1,14 +1,12 @@
 <odoo>
-    <record id="view_assign_writer_form" model="ir.ui.view">
-        <field name="name">view.assign.writer.form</field>
+    <record id="assign_writer_view_form" model="ir.ui.view">
+        <field name="name">assign.writer.view.form</field>
         <field name="model">assign.writer</field>
         <field name="arch" type="xml">
             <form string="Assign Vendor Writer">
                 <sheet>
                     <group>
-                        <group>
-                            <field name="writer_id" options="{'no_open':True,'no_create':True}"/>
-                        </group>
+                        <field name="writer_id" options="{'no_create':True}"/>
                     </group>
                 </sheet>
                 <footer>
@@ -19,31 +17,20 @@
         </field>
     </record>
 
-    <record id="action_assign_writer_wizard" model="ir.actions.act_window">
+    <record id="assign_writer_action" model="ir.actions.act_window">
         <field name="name">Assign Writer</field>
         <field name="res_model">assign.writer</field>
         <field name="view_mode">form</field>
-        <field name="view_id" ref="writer.view_assign_writer_form"/>
+        <field name="view_id" ref="writer.assign_writer_view_form"/>
         <field name="target">new</field>
     </record>
 
-
-    <record id="action_assign_writer_product_template_server" model="ir.actions.server">
+    <record id="product_template_action_assign_writer" model="ir.actions.server">
         <field name="name">Assign Writer</field>
         <field name="model_id" ref="product.model_product_template"/>
         <field name="binding_model_id" ref="product.model_product_template"/>
         <field name="binding_view_types">list</field>
         <field name="state">code</field>
-        <field name="code">action = records._action_assign_writer()</field>
-    </record>
-
-
-    <record id="action_assign_writer_product_category_server" model="ir.actions.server">
-        <field name="name">Assign Writer</field>
-        <field name="model_id" ref="product.model_product_category"/>
-        <field name="binding_model_id" ref="product.model_product_category"/>
-        <field name="binding_view_types">list</field>
-        <field name="state">code</field>
-        <field name="code">action = records._action_assign_writer()</field>
+        <field name="code">action = records.action_assign_writer()</field>
     </record>
 </odoo>
