@@ -80,7 +80,6 @@ class WriterCommissionLine(models.Model):
                             ],
                         }
                     )
-                    invoice.action_post()
                     commission_lines.write({"state": "posted", "invoice_id": invoice.id})
 
     def action_cancel(self):
