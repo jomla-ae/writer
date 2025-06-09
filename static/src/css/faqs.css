@@ -1,0 +1,100 @@
+.table-faqs-container table {
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.table-faqs-container th {
+    background-color: #f2f2f2;
+    text-align: left;
+    padding: 8px;
+    color: #35979C;
+}
+
+.table-faqs-container td {
+    border-left: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.table-faqs-container #remove_faq {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.table-faqs-container #remove_faq i {
+    pointer-events: none;
+    color: red;
+}
+
+.table-faqs-container #add_faq {
+    background-color: #35979C;
+    color: #fff !important;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.table-faqs-container .gg-trash {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 10px;
+    height: 12px;
+    border: 2px solid transparent;
+    box-shadow:
+        0 0 0 2px,
+        inset -2px 0 0,
+        inset 2px 0 0;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+    margin-top: 4px
+}
+.table-faqs-container .gg-trash::after,
+.table-faqs-container .gg-trash::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute
+}
+.table-faqs-container .gg-trash::after {
+    background: currentColor;
+    border-radius: 3px;
+    width: 16px;
+    height: 2px;
+    top: -4px;
+    left: -5px
+}
+.table-faqs-container .gg-trash::before {
+    width: 10px;
+    height: 4px;
+    border: 2px solid;
+    border-bottom: transparent;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    top: -7px;
+    left: -2px
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

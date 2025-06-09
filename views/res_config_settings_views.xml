@@ -1,0 +1,50 @@
+<odoo>
+    <record id="view_writer_res_config_settings_view" model="ir.ui.view">
+        <field name="name">view.writer.res.config.settings.view</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Writer" string="Writer" data-key="writer">
+                    <h2>Writer Commission</h2>
+                    <div class="row mt16 o_settings_container" name="writer_commission_setting_container">
+                        <div class="col-12 col-lg-6 o_setting_box" id="writer_commission_product">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Product</span>
+                                <div class="text-muted">
+                                    Product used for create vendor bill
+                                </div>
+                                <div class="text-muted">
+                                    <field name="writer_commission_product_id"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 o_setting_box" id="writer_commission_journal">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Journal</span>
+                                <div class="text-muted">
+                                    Journal used for create vendor bill
+                                </div>
+                                <div class="text-muted">
+                                    <field name="writer_commission_journal_id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_writer_config" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'writer', 'bin_size': False}</field>
+    </record>
+</odoo>
+
