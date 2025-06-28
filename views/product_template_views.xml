@@ -139,6 +139,7 @@
                         <group>
                             <field name="default_code" readonly="1"/>
                             <field name="writer_id"/>
+                            <field name="writer_submit_date"/>
                             <field name="active" invisible="1"/>
                             <field name="sale_ok" invisible="1"/>
                         </group>

@@ -70,18 +70,14 @@
                             <t t-foreach="products" t-as="product">
                                 <tr>
                                     <td>
-                                        <img
-                                                t-if="product.image_1920"
-                                                t-att-src="image_data_uri(product.image_1920)"
-                                                style="max-height:60pt;max-width:90%"
-                                                alt="Product Image"
-                                        />
-                                        <img
-                                                t-elif="product.old_image_url"
-                                                t-att-src="product.old_image_url"
-                                                style="max-height:60pt;max-width:90%"
-                                                alt="Product Image"
-                                        />
+                                        <img t-if="product.image_1920"
+                                             t-att-src="'/web/image/product.template/%s/image_1920' % product.id"
+                                             style="max-height:60pt;max-width:90%"
+                                             alt="Product Image"/>
+                                        <img t-elif="product.old_image_url"
+                                             t-att-src="product.old_image_url"
+                                             style="max-height:60pt;max-width:90%"
+                                             alt="Product Image"/>
                                     </td>
 
                                     <td>
@@ -282,7 +278,7 @@
 
                             <textarea name="description" id="description" style="min-height: 120px"
                                       class="form-control o_ckeditor_loader" data-lang="en"
-                            ><t t-esc="product.with_context(lang=lang_code_en).description" /></textarea>
+                            ><t t-esc="product.with_context(lang=lang_code_en).description"/></textarea>
                         </div>
 
                         <div class="mb-3 col-12">
@@ -293,7 +289,7 @@
                             <textarea name="description_arabic" id="description_arabic"
                                       style="min-height: 120px"
                                       class="form-control o_ckeditor_loader" data-lang="ar"
-                            ><t t-esc="product.description_arabic" /></textarea>
+                            ><t t-esc="product.description_arabic"/></textarea>
                         </div>
 
                         <div class="mb-3 col-12">
@@ -327,7 +323,7 @@
                                 id="seo_description"
                                 style="min-height: 120px"
                                 class="form-control"
-                            ><t t-esc="product.with_context(lang=lang_code_en).seo_description" /></textarea>
+                            ><t t-esc="product.with_context(lang=lang_code_en).seo_description"/></textarea>
                         </div>
 
                         <div class="mb-3 col-12">
@@ -340,7 +336,7 @@
                                 id="seo_description_arabic"
                                 style="min-height: 120px"
                                 class="form-control"
-                            ><t t-esc="product.with_context(lang=lang_code_ar or lang_code_en).seo_description" /></textarea>
+                            ><t t-esc="product.with_context(lang=lang_code_ar or lang_code_en).seo_description"/></textarea>
                         </div>
 
                         <div class="col">

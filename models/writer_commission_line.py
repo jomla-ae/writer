@@ -13,7 +13,7 @@ class WriterCommissionLine(models.Model):
     _description = "Writer Commission Line"
 
     writer_id = fields.Many2one("res.users", string="Writer", domain=lambda self: [("groups_id", "in", self.env.ref("writer.group_writer").id)])
-    date = fields.Date(string="Date", required=True, default=lambda self: fields.Date.context_today(self))
+    date = fields.Date(string="Date", default=lambda self: fields.Date.context_today(self))
     product_template_id = fields.Many2one("product.template", string="Product")
     amount = fields.Monetary(string="Amount", tracking=True)
     state = fields.Selection([("draft", "Draft"), ("posted", "Posted"), ("cancel", "Cancelled")], string="Status", index=True, default="draft", required=True, tracking=True)

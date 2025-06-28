@@ -1,5 +1,5 @@
-from odoo.osv.expression import OR
 from odoo import _
+from odoo.osv.expression import OR
 
 
 def get_searchbar_groupby():
@@ -69,24 +69,22 @@ def get_searchbar_inputs():
 
 
 def get_search_domain(search_in, search):
-    if not search_in or not search:
-        return []
+    domain = [("state", "!=", "published")]
 
     search_domain = []
+    if search_in and search:
+        if search_in in ("name", "all"):
+            search_domain.append([("name", "ilike", search)])
 
-    if search_in in ("name", "all"):
-        search_domain.append([("name", "ilike", search)])
+        if search_in in ("internal_reference", "all"):
+            search_domain.append([("default_code", "ilike", search)])
 
-    if search_in in ("internal_reference", "all"):
-        search_domain.append([("default_code", "ilike", search)])
+        if search_in in ("brand", "all"):
+            search_domain.append([("brand_id", "ilike", search)])
 
-    if search_in in ("brand", "all"):
-        search_domain.append([("brand_id", "ilike", search)])
-
-    if search_in in ("tags", "all"):
-        search_domain.append([("product_tag_ids", "ilike", search)])
-
-    if not search_domain:
-        return []
-
-    return OR(search_domain)
+        if search_in in ("tags", "all"):
+            search_domain.append([("product_tag_ids", "ilike", search)])
+    if search_domain:
+        return domain + OR(search_domain)
+    else:
+        return domain
