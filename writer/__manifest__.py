@@ -38,6 +38,7 @@
             "writer/static/src/js/column_toggle.js",
         ],
     },
+    "images": ["static/description/banner.png"],
     "application": True,
     "license": "LGPL-3",
 }
