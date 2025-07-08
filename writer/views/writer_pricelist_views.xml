@@ -1,0 +1,40 @@
+<odoo>
+    <record id="writer_pricelist_view_tree" model="ir.ui.view">
+        <field name="name">writer.pricelist.view.tree</field>
+        <field name="model">writer.pricelist</field>
+        <field name="arch" type="xml">
+            <tree string="Writer Pricelist">
+                <field name="display_name"/>
+                <field name="writer_ids" optional="show"/>
+                <field name="price"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="writer_pricelist_view_form" model="ir.ui.view">
+        <field name="name">writer.pricelist.view.form</field>
+        <field name="model">writer.pricelist</field>
+        <field name="arch" type="xml">
+            <form string="Writer Pricelist">
+                <sheet>
+                    <group>
+                        <field name="writer_ids" widget="many2many_checkboxes"/>
+                        <field name="currency_id" groups="base.group_multi_currency"/>
+                        <field name="price"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="writer_priclist_action" model="ir.actions.act_window">
+        <field name="name">Writer Pricelists</field>
+        <field name="res_model">writer.pricelist</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

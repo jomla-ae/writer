@@ -1,0 +1,39 @@
+<odoo>
+    <record id="writer_res_users_view_form" model="ir.ui.view">
+        <field name="name">writer.res.users.view.form</field>
+        <field name="model">res.users</field>
+        <field name="arch" type="xml">
+            <form string="Users">
+                <sheet>
+                    <group>
+                        <field name="name" string="Name"/>
+                        <field name="login" string="Email Address"/>
+                        <!-- DO NOT REMOVE THIS; the user won't have implied_ids of "group_writer" if this is not present or readonly. I have no idea why -->
+                        <field name="groups_id" invisible="1"/>
+                        <field name="create_employee" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="writer_res_users_action" model="ir.actions.act_window">
+        <field name="name">Writers</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('base.view_users_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('writer.writer_res_users_view_form')}),
+         ]"/>
+        <field name="domain" eval='[("groups_id", "in", ref("group_writer"))]'/>
+        <field name="context" eval='{
+            "default_groups_id": [ref("writer.group_writer")],
+            "default_create_employee": True,
+        }'/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new Writer
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,86 @@
+<odoo>
+    <template id="portal_my_writer_commission_lines" name="My Writer Commission Lines">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Commission Report</t>
+            </t>
+
+            <ol class="o_portal_submenu breadcrumb mb-0 py-2 flex-grow-1">
+                <li>
+                    <input type="hidden" id="keep_query" t-att-value="keep_query()"/>
+                    <button type="button" class="btn btn-primary o_default_snippet_text" title="Export"
+                            onclick="onclick_writer_commission_lines_export()">Export
+                    </button>
+                </li>
+            </ol>
+
+            <t t-if="not grouped_commission_lines">
+                <div class="alert alert-warning mt8" role="alert">
+                    There are no commissions.
+                </div>
+            </t>
+            <t t-else="">
+                <t t-call="portal.portal_table">
+                    <thead>
+                        <tr>
+                            <th/>
+                            <th>Product</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <t t-foreach="grouped_commission_lines" t-as="commission_lines">
+                        <tbody t-if="commission_lines">
+                            <tr t-if="not groupby == 'none'" class="table-light">
+                                <th t-if="groupby == 'state'" colspan="8">
+                                    <span class="text-truncate" t-field="commission_lines[0].state"/>
+                                </th>
+
+                                <th t-if="groupby == 'date'" colspan="8">
+                                    <span class="text-truncate" t-field="commission_lines[0].date"/>
+                                </th>
+
+                                <th t-if="groupby == 'product'" colspan="8">
+                                    <span class="text-truncate"
+                                          t-esc="commission_lines[0].product_template_id.display_name or 'None'"/>
+                                </th>
+                            </tr>
+                        </tbody>
+
+                        <tbody t-if="commission_lines">
+                            <t t-foreach="commission_lines" t-as="commission_line">
+                                <tr class="tr_writer_commission_line">
+                                    <td>
+                                        <input class="form-check-input ms-2" type="checkbox"
+                                               t-att-id="commission_line.id"
+                                               onchange="select_writer_commission_line(this)"/>
+                                    </td>
+
+                                    <td>
+                                        <span t-field="commission_line.product_template_id"/>
+                                    </td>
+
+                                    <td>
+                                        <span t-field="commission_line.date"/>
+                                    </td>
+
+                                    <td>
+                                        <span t-field="commission_line.amount"/>
+                                    </td>
+
+                                    <td>
+                                        <span class="badge text-bg-light" t-field="commission_line.state"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

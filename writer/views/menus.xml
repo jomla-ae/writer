@@ -1,0 +1,40 @@
+<odoo>
+    <menuitem id="writer_menu_main"
+              name="Writers"
+              web_icon="writer,static/description/icon.png"/>
+
+    <menuitem id="res_users_menu_writer"
+              name="Writers"
+              parent="writer_menu_main"
+              action="writer_res_users_action"/>
+
+    <menuitem id="product_template_menu_writer"
+              name="Products"
+              parent="writer_menu_main"
+              action="writer_product_template_action"/>
+
+    <menuitem id="writer_target_menu"
+              name="Targets"
+              parent="writer_menu_main"
+              action="writer_target_action"/>
+
+    <menuitem id="writer_commission_line_menu"
+              name="Commission Lines"
+              parent="writer_menu_main"
+              action="writer_commission_line_action"/>
+
+    <!-- Configuration -->
+    <menuitem id="writer_menu_config"
+              name="Configuration"
+              parent="writer_menu_main"/>
+
+    <menuitem id="res_config_settings_menu_writer"
+              name="Settings"
+              parent="writer_menu_config"
+              action="writer_res_config_settings_action"/>
+
+    <menuitem id="writer_priclist_menu"
+              name="Pricelists"
+              parent="writer_menu_config"
+              action="writer_priclist_action"/>
+</odoo>
